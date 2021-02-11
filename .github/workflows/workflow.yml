@@ -5,9 +5,9 @@ on:
       branches: main
 
 env:
-  AZURE_FUNCTIONAPP_NAME: function_test  # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH:  /AzureFunctionGitHubAction # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '3.1'              # set this to the dotnet version to use
+  AZURE_FUNCTIONAPP_NAME: function_action
+  AZURE_FUNCTIONAPP_PACKAGE_PATH:  /AzureFunctionGitHubAction 
+  DOTNET_VERSION: '3.1'             
   OUTPUT_PATH: ${{ github.workspace }}/.output
   
 jobs:
@@ -25,8 +25,9 @@ jobs:
     - name: 'Build project'
       shell: pwsh
       run: dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
-
-          
+      
+      name: Test
+      run: dotnet test --no-restore --verbosity normal
     - 
       name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1

@@ -4,8 +4,9 @@
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.25" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.ServiceBus" Version="2.3.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.3.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.3.0" />
+    <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.3.1" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
   </ItemGroup>
   <ItemGroup>
