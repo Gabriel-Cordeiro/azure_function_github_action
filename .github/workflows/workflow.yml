@@ -6,10 +6,10 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_NAME: function_test  # set this to your application's name
-  BUILD_PATH:  /AzureFunctionGitHubAction
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: ''  # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_PACKAGE_PATH:  /AzureFunctionGitHubAction # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1'              # set this to the dotnet version to use
-
+  OUTPUT_PATH: ${{ github.workspace }}/.output
+  
 jobs:
   build-and-deploy:
     runs-on: windows-latest
@@ -22,12 +22,10 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: 'Resolve Project Dependencies Using Dotnet'
+    - name: 'Build project'
       shell: pwsh
-      run: |
-        pushd './${{ env.BUILD_PATH }}'
-        dotnet build --configuration Release --output ./output
-        popd
+      run: dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+
           
     - 
       name: 'Run Azure Functions Action'
@@ -35,6 +33,6 @@ jobs:
       id: fa
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output
+        package: ${{ env.OUTPUT_PATH }}
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
