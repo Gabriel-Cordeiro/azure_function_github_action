@@ -6,7 +6,7 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_NAME: function_test  # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: /AzureFunctionGitHubAction   # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: \azure_function_github_action\AzureFunctionGitHubAction   # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1'              # set this to the dotnet version to use
 
 jobs:
@@ -34,6 +34,6 @@ jobs:
       id: fa
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: D:\a\azure_function_github_action\azure_function_github_action\AzureFunctionGitHubAction\output\
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}\output
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
