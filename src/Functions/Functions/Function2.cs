@@ -7,7 +7,7 @@ using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
-namespace AzureFunctionGitHubAction.Functions
+namespace Functions.Functions
 {
     public static class Function2
     {
