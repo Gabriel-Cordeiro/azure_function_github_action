@@ -5,7 +5,7 @@ on:
       branches: main
 
 env:
-  AZURE_FUNCTIONAPP_NAME: function_action
+  AZURE_FUNCTIONAPP_NAME: publisherNow
   AZURE_FUNCTIONAPP_PACKAGE_PATH:  /AzureFunctionGitHubAction 
   DOTNET_VERSION: '3.1'             
   OUTPUT_PATH: ${{ github.workspace }}/.output
