@@ -1,4 +1,4 @@
-name: Deploy DotNet project to Azure Function App
+name: Deploy Azure Function
 
 on:
   push:
@@ -14,36 +14,38 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
-    - uses: azure/login@v1
+    - name: Azure Login
+      uses: azure/login@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-    - uses: azure/appservice-settings@v1
+    
+    - name: Configuring Azure secrets
+      uses: azure/appservice-settings@v1
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         app-settings-json: '${{ secrets.APP_SETTINGS }}' 
         connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
       id: settings
-    - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
     - run: |
         az logout
         
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
 
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: 'Restore and Build project'
+    - name: Restore and Build project
       shell: pwsh
       run: dotnet restore && dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
       
-    - name: Test
+    - name: Unit Tests
       run: dotnet test --no-restore --verbosity normal
       
-    - name: 'Run Azure Functions Action'
+    - name: Run Azure Functions
       uses: Azure/functions-action@v1
       id: fa
       with:
