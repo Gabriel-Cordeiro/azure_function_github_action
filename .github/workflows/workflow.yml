@@ -22,9 +22,9 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: 'Build project'
+    - name: 'Restore and Build project'
       shell: pwsh
-      run: dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+      run: dotnet restore && dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
       
     - name: Test
       run: dotnet test --no-restore --verbosity normal
