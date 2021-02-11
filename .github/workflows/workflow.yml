@@ -14,6 +14,20 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
+    - uses: azure/login@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+    - uses: azure/appservice-settings@v1
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        app-settings-json: '${{ secrets.APP_SETTINGS }}' 
+        connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+        general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
+      id: settings
+    - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
+    - run: |
+        az logout
+        
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
 
