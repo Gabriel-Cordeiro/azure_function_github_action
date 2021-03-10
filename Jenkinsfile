@@ -4,8 +4,8 @@ pipeline {
     stage('Build') {
       steps {
         dotnetRestore()
-        dotnetPublish(configuration: 'Realease')
         dotnetTest()
+        dotnetPublish(configuration: 'Release')
       }
     }
 
