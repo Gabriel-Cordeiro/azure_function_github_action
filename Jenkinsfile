@@ -9,5 +9,11 @@ pipeline {
       }
     }
 
+    stage('Publish') {
+      steps {
+        azureFunctionAppPublish(deployOnlyIfSuccessful: true, appName: 'publisherNow', resourceGroup: 'TestEventHub', azureCredentialsId: 'AzureId')
+      }
+    }
+
   }
 }
