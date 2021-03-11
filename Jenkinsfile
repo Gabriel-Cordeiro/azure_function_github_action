@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        dotnetClean()
         dotnetRestore()
         dotnetTest()
         dotnetPublish(configuration: 'Release')
