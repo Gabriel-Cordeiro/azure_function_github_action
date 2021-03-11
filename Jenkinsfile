@@ -23,7 +23,7 @@ pipeline {
 
     stage('Function Settings') {
       steps {
-        azureCLI commands: [script: 'az functionapp config appsettings set --name publisherNow --resource-group TestEventHub --settings "TesteJenkins=String"'], principalCredentialId: 'AzureCredentials'
+        azureCLI(commands: [script: 'az functionapp config appsettings set --name publisherNow --resource-group TestEventHub --settings "TesteJenkins=String"'], principalCredentialId: 'AzureCredentials')
       }
     }
 
