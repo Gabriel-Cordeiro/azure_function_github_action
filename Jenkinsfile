@@ -11,7 +11,7 @@ pipeline {
 
     stage('Publish') {
       steps {
-        azureFunctionAppPublish(deployOnlyIfSuccessful: true, appName: 'publisherNow', resourceGroup: 'TestEventHub', azureCredentialsId: 'AzureCredentials', sourceDirectory: 'azure_function_github_action_main\\src\\Functions\\bin\\Release\\netcoreapp3.1\\publish\\')
+        azureFunctionAppPublish(deployOnlyIfSuccessful: true, appName: 'publisherNow', resourceGroup: 'TestEventHub', azureCredentialsId: 'AzureCredentials', sourceDirectory: 'zure_function_github_action_main\\tests\\UnitTests\\bin\\Release\\netcoreapp3.1\\publish')
       }
     }
 
