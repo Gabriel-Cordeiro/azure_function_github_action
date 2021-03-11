@@ -5,14 +5,19 @@ pipeline {
       steps {
         dotnetClean()
         dotnetRestore()
-        dotnetTest()
         dotnetPublish(configuration: 'Release')
       }
     }
 
-    stage('Publish') {
+    stage('Tests') {
       steps {
-        azureFunctionAppPublish(deployOnlyIfSuccessful: true, appName: 'publisherNow', resourceGroup: 'TestEventHub', azureCredentialsId: 'AzureCredentials', filePath: 'zure_function_github_action_main\\src\\Functions\\bin\\Release\\netcoreapp3.1\\')
+        dotnetTest()
+      }
+    }
+
+    stage('Publish Function') {
+      steps {
+        azureFunctionAppPublish(azureCredentialsId: 'AzureCredentials', resourceGroup: 'TestEventHub', appName: 'publisherNow', deployOnlyIfSuccessful: true, filePath: 'zure_function_github_action_main\\src\\Functions\\bin\\Release\\netcoreapp3.1\\')
       }
     }
 
