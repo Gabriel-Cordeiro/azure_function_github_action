@@ -25,6 +25,8 @@ namespace Functions.Functions
 
                     // Replace these two lines with your processing logic.
                     log.LogInformation($"C# Event Hub trigger function processed a message: {messageBody}");
+                    Console.WriteLine("Log from Console write line");
+
                     await Task.Yield();
                 }
                 catch (Exception e)
