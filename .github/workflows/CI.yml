@@ -13,7 +13,7 @@ env:
   OUTPUT_PATH: ${{ github.workspace }}/.output
   
 jobs:
-  build-and-deploy:
+  Build:
     runs-on: windows-latest
     steps:
         
@@ -31,4 +31,9 @@ jobs:
       
     - name: Unit Tests
       run: dotnet test --no-restore --verbosity normal
-
+    
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+       name: functions-artifact
+       path: ${{ github.workspace }}/.output/artifacts
