@@ -10,7 +10,7 @@ namespace Functions
         [FunctionName("Function2")]
         public static void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log)
         {
-            _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}, trying github actions CD");
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}, trying github actions CD");
         }
     }
 }
