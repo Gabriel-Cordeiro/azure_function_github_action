@@ -8,10 +8,12 @@ on:
       - completed
  
 jobs:
-  Publish:
-   runs-on: windows-latest
-   steps: 
-   
-   - name: 'Checkout GitHub Action'
-     uses: actions/checkout@master
-  
+  Homologation:
+    name: Deploy to homologation
+    environment: Homologation
+    runs-on: windows-latest
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: functions-artifact
