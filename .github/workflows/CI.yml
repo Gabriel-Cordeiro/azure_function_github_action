@@ -1,0 +1,39 @@
+name: CI Azure Function
+
+on:
+ push:
+    branches: [ develop, main, feature/*, hotfix/* ]
+ pull_request:
+    branches: [ develop, main ]
+ workflow_dispatch: 
+  
+env:
+  AZURE_FUNCTIONAPP_NAME: publisherNow
+  DOTNET_VERSION: '3.1'             
+  OUTPUT_PATH: ${{ github.workspace }}/.output
+  
+jobs:
+  Build:
+    runs-on: windows-latest
+    steps:
+        
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@master
+
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore and Build project
+      shell: pwsh
+      run: dotnet restore && dotnet publish --configuration Release --output ${{ env.OUTPUT_PATH }}
+      
+    - name: Unit Tests
+      run: dotnet test --no-restore --verbosity normal
+    
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+       name: functions-artifact
+       path: ${{ env.OUTPUT_PATH }}

@@ -1,0 +1,17 @@
+name: CD Homologação
+
+on:
+ workflow_run:
+    workflows: ["CI Azure Function"]
+    branches: [develop]
+    types:
+      - completed
+ 
+jobs:
+  Publish:
+   runs-on: windows-latest
+   steps: 
+   
+   - name: 'Checkout GitHub Action'
+     uses: actions/checkout@master
+  
