@@ -6,6 +6,8 @@ on:
     branches: [develop]
     types:
       - completed
+env:        
+  OUTPUT_PATH: /.output      
  
 jobs:
   Homologation:
@@ -13,10 +15,20 @@ jobs:
     environment: Homologation
     runs-on: windows-latest
     steps:
+    
     - name: Download artifact
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: CI.yml
         workflow_conclusion: success
         name: functions-artifact
+        path: ${{ env.OUTPUT_PATH }}
+        
+    - name: Deploy Azure Functions
+      uses: Azure/functions-action@v1
+      id: fa
+      with:
+        app-name: publisherNow
+        package: ${{ env.OUTPUT_PATH }}
+        publish-profile: ${{ env.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
