@@ -15,10 +15,9 @@ namespace Functions
         }
 
         [FunctionName("Function1")]
-        public void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer)
+        public void Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer)
         {
-            Console.WriteLine("Log from Console write line");
-            _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}, trying github actions CD");
         }
     }
 }
