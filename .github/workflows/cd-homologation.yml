@@ -13,7 +13,7 @@ jobs:
     environment: Homologation
     runs-on: windows-latest
     steps:
-    - name: Download artifacts
+    - name: Download artifact
       uses: actions/download-artifact@v2
       with:
         name: functions-artifact
