@@ -10,7 +10,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: publisherNow
   DOTNET_VERSION: '3.1'             
-  OUTPUT_PATH: ${{ github.workspace }}/.output
+  OUTPUT_PATH: ${{ github.workspace }}/output
   
 jobs:
   Build:
