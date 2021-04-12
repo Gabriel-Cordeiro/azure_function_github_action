@@ -1,4 +1,4 @@
-name: CI Azure Function
+name: CI/CD for Azure Function
 
 on:
  push:
@@ -41,9 +41,11 @@ jobs:
        
  Homologation:
      needs: Build
+     if: github.ref == 'refs/heads/develop'
      name: Deploy to homologation
      environment: Homologation
      runs-on: ubuntu-latest
+     
      steps:
      - name: Download artifacts
        uses: actions/download-artifact@v2
