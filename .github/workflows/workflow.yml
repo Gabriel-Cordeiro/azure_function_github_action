@@ -10,10 +10,11 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: publisherNow
   DOTNET_VERSION: '3.1'             
-  OUTPUT_PATH: ${{ github.workspace }}/output
+  OUTPUT_PATH: ${{ github.workspace }}/artifacts
+  ARTIFACT_NAME: functions-artifact
   
 jobs:
-  Build:
+ Build:
     runs-on: ubuntu-latest
     steps:
         
@@ -35,5 +36,29 @@ jobs:
     - name: Publish Artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
-       name: functions-artifact
+       name: ${{ env.ARTIFACT_NAME }}
        path: ${{ env.OUTPUT_PATH }}
+       
+ Homologation:
+     needs: Build
+     name: Deploy to homologation
+     environment: Homologation
+     runs-on: ubuntu-latest
+     steps:
+     - name: Download artifacts
+       uses: actions/download-artifact@v2
+       with:
+        name: ${{ env.ARTIFACT_NAME }}
+        
+     - name: Azure Login
+       uses: azure/login@v1
+       with:
+         creds: '${{ secrets.AZURE_CREDENTIALS }}'     
+   
+     - name: Deploy Azure Functions
+       uses: Azure/functions-action@v1
+       id: fa
+       with:
+         app-name: gabriel-teste
+         publish-profile: ${{ env.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}   
+
